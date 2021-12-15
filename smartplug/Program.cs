@@ -19,7 +19,6 @@ namespace Smartplug
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI();
-                // Hello, world
     }
 }
 
