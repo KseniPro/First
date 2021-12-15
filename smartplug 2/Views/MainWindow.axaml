@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Smartplug.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Smartplug.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Height="450"
+        Width="800"
+        Title="Smartplug">
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock>
+                COM port:
+            </TextBlock>
+            <ComboBox
+                Items="{Binding PortNames}" 
+                SelectedItem="{Binding PortName}"/>
+        </StackPanel>
+        <ItemsControl Items="{Binding PlugViewModels}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:PlugViewModel}">
+                    <DockPanel>
+                        <CheckBox HorizontalAlignment="Center"
+                                  IsChecked="{Binding Toggle}"
+                                  DockPanel.Dock="Top">
+                            <TextBlock Text="{Binding PlugId}" />
+                        </CheckBox>
+                        <oxy:PlotView MinWidth="200" MinHeight="200"
+                                      Model="{Binding PlugPlotModel}" />
+                    </DockPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</Window>
